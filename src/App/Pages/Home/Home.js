@@ -9,7 +9,7 @@ function Home() {
   const [getallemployes, setGetallemployes] = useState();
 
   useEffect(() => {
-    setGetallemployes(getallemployesdata.data);
+    setGetallemployes(getallemployesdata?.data);
   }, [getallemployesdata]);
 
   console.log(getallemployes);
