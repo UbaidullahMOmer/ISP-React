@@ -44,6 +44,7 @@ function Home() {
             className="search__input"
             type="text"
             placeholder="Search (Ctrl+/)"
+            
           />
         </div>
         <div className="profile">
@@ -79,12 +80,12 @@ function Home() {
         <div className="filter">
           <h1 className="heading">Filter</h1>
           <div className="filters">
-            <div className="filter__input">
-              <input type="text" disabled="" placeholder="Select Status" />
+            <div className="filter__input" >
+              <input type="text" disabled placeholder="Select Status" />
               <i className="ri-arrow-down-s-fill arrow__icon" />
             </div>
             <div className="filter__input">
-              <input type="text" disabled="" placeholder="Date" />
+              <input type="text" disabled placeholder="Date" />
               <i className="ri-arrow-down-s-fill arrow__icon" />
             </div>
           </div>
@@ -106,13 +107,19 @@ function Home() {
                 <span className="data__heading client__name">Client</span>
               </div>
               <div className="data">
-                <span className="data__heading">Total</span>
+                <span className="data__heading">Phone</span>
               </div>
               <div className="data">
-                <span className="data__heading">Issued Date</span>
+                <span className="data__heading">Email</span>
               </div>
               <div className="data">
-                <span className="data__heading">Balance</span>
+                <span className="data__heading">Address</span>
+              </div>
+              <div className="data">
+                <span className="data__heading">Roll</span>
+              </div>
+              <div className="data">
+                <span className="data__heading">Active</span>
               </div>
               <div className="data">
                 <span className="data__heading">Action</span>
@@ -135,13 +142,29 @@ function Home() {
                     </span>
                   </div>
                   <div className="data">
-                    <span className="data__content">$3428</span>
+                    <span className="data__content">
+                      {data?.phone}
+                    </span>
                   </div>
                   <div className="data">
-                    <span className="data__content">22 Oct 2019</span>
+                    <span className="data__content">
+                      {data?.employeeEmail}
+                    </span>
                   </div>
                   <div className="data">
-                    <span className="data__content paid">Paid</span>
+                    <span className="data__content">
+                      {data?.address}
+                    </span>
+                  </div>
+                  <div className="data">
+                    <span className="data__content paid">
+                      {data?.employeeRole}
+                    </span>
+                  </div>
+                  <div className="data">
+                    <span className="data__content paid">
+                      {data?.status? "Active" : "UnActive"}
+                    </span>
                   </div>
                   <div className="data">
                     <span className="data__content">Action</span>
