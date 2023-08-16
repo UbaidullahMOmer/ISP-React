@@ -127,7 +127,7 @@ function Home() {
                     <input type="checkbox" />
                   </div>
                   <div className="data">
-                    <span className="data__content user__id">#4910</span>
+                    <span className="data__content user__id">{data?.employeeId}</span>
                   </div>
                   <div className="data">
                     <span className="data__content client__name">
