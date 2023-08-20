@@ -44,7 +44,6 @@ function Home() {
             className="search__input"
             type="text"
             placeholder="Search (Ctrl+/)"
-            
           />
         </div>
         <div className="profile">
@@ -80,7 +79,7 @@ function Home() {
         <div className="filter">
           <h1 className="heading">Filter</h1>
           <div className="filters">
-            <div className="filter__input" >
+            <div className="filter__input">
               <input type="text" disabled placeholder="Select Status" />
               <i className="ri-arrow-down-s-fill arrow__icon" />
             </div>
@@ -112,8 +111,8 @@ function Home() {
               <div className="data">
                 <span className="data__heading">Email</span>
               </div>
-              <div className="data">
-                <span className="data__heading">Address</span>
+              <div className="data address__data">
+                <span className="data__heading ">Address</span>
               </div>
               <div className="data">
                 <span className="data__heading">Roll</span>
@@ -127,14 +126,16 @@ function Home() {
             </div>
 
             {getallemployes?.map((adata) => {
-              const data = adata?.attributes
+              const data = adata?.attributes;
               return (
-                <div className="row">
+                <div className="row" key={data?.employeeId}>
                   <div className="data check">
                     <input type="checkbox" />
                   </div>
                   <div className="data">
-                    <span className="data__content user__id">{data?.employeeId}</span>
+                    <span className="data__content user__id">
+                      {data?.employeeId}
+                    </span>
                   </div>
                   <div className="data">
                     <span className="data__content client__name">
@@ -142,19 +143,15 @@ function Home() {
                     </span>
                   </div>
                   <div className="data">
-                    <span className="data__content">
-                      {data?.phone}
-                    </span>
+                    <span className="data__content">{data?.phone}</span>
                   </div>
                   <div className="data">
-                    <span className="data__content">
-                      {data?.employeeEmail}
-                    </span>
+                    <span className="data__content">{data?.employeeEmail}</span>
                   </div>
-                  <div className="data">
-                    <span className="data__content">
+                  <div className="data address__data">
+                    <abbr className="data__content" title={data?.address}>
                       {data?.address}
-                    </span>
+                    </abbr>
                   </div>
                   <div className="data">
                     <span className="data__content paid">
@@ -163,11 +160,15 @@ function Home() {
                   </div>
                   <div className="data">
                     <span className="data__content paid">
-                      {data?.status? "Active" : "UnActive"}
+                      {data?.status ? "Active" : "UnActive"}
                     </span>
                   </div>
                   <div className="data">
-                    <span className="data__content">Action</span>
+                    <span className="data__content action">
+                      <i class="ri-delete-bin-2-line"></i>
+                      <i class="ri-edit-2-line"></i>
+                      <i class="ri-eye-line"></i>
+                    </span>
                   </div>
                 </div>
               );

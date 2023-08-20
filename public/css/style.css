@@ -36,7 +36,9 @@
   display: flex;
   align-items: start;
   gap: 20px;
-  height: 100vh;
+}
+
+body {
   /* sidebar */
   /* sidebar */
 }
@@ -321,8 +323,10 @@ body .main__dashboard .filter__table .table .rows__data .row {
   justify-content: space-between;
 }
 body .main__dashboard .filter__table .table .rows__data .row .data {
+  overflow: hidden;
   width: 100px;
 }
+body .main__dashboard .filter__table .table .rows__data .row .data abbr,
 body .main__dashboard .filter__table .table .rows__data .row .data span {
   color: rgba(50, 71, 92, 0.87);
   font-family: Public Sans;
@@ -335,6 +339,10 @@ body .main__dashboard .filter__table .table .rows__data .row .data span {
 }
 body .main__dashboard .filter__table .table .rows__data .row .data .user__id {
   color: var(--primary-color);
+}
+body .main__dashboard .filter__table .table .rows__data .row .address__data {
+  width: 500px;
+  overflow: hidden;
 }
 body .main__dashboard .filter__table .table .rows__data .row .check {
   width: -moz-fit-content;

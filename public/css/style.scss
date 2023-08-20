@@ -28,11 +28,13 @@
     color: var(--white-color);
 }
 
-body {
+#root {
     display: flex;
     align-items: start;
     gap: 20px;
-    height: 100vh;
+}
+
+body {
 
     /* sidebar */
     /* sidebar */
@@ -348,8 +350,10 @@ body {
                         justify-content: space-between;
 
                         .data {
+                            overflow: hidden;
                             width: 100px;
-
+                              
+                            abbr,
                             span {
                                 color: rgba(50, 71, 92, 0.87);
                                 font-family: Public Sans;
@@ -364,6 +368,12 @@ body {
                             .user__id {
                                 color: var(--primary-color);
                             }
+
+                        }
+
+                        .address__data {
+                            width: 500px;
+                            overflow: hidden;
                         }
 
                         .check {
@@ -378,7 +388,7 @@ body {
                             border-radius: 50px;
                             padding: 6px 10px;
                             background-color: #72E1281F;
-                            color:  #71DD37 !important;
+                            color: #71DD37 !important;
                             font-family: Public Sans;
                             font-size: 13px;
                             font-style: normal;
