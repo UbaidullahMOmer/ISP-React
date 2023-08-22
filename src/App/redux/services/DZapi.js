@@ -14,11 +14,13 @@ export const DZapi = createApi({
   //******************Api Query******************//
 
   endpoints: (builder) => ({
-    getAllEmployees: builder.query({query: () => "/employees",}),
+    getAllEmployees: builder.query({query: () => "employees",}),
+    getOneEmployees: builder.query({query: (id) => `employees/${id}`,}), 
   }),
 });
 
 export const {
   useGetAllEmployeesQuery,
+  useGetOneEmployeesQuery,
 
 } = DZapi;

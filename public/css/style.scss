@@ -36,6 +36,152 @@
 
 body {
 
+    .address__popup {
+        gap: 10px;
+        width: 60%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        position: fixed;
+        z-index: 10;
+        top: 50%;
+        left: 50%;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        background-color: var(--white-color);
+        border-radius: 10px;
+        transition: .3s ease-in-out;
+        animation: unipop .3s 1;
+        transform: translate(-50%, -50%);
+        visibility: hidden;
+    }
+
+    .input {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .input label {
+        color: var(--secondry-color);
+        font-size: var(--medium-size);
+        font-weight: var(--normal-font-weight);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .input input {
+        width: 100%;
+        color: var(--primary-color);
+        border: 1.2px solid var(--primary-color);
+        padding: 16px 20px;
+        border-radius: 10px;
+        outline: 0;
+    }
+
+    .input input::placeholder {
+        color: var(--primary-color);
+    }
+
+
+    .input select {
+        padding-right: 10px;
+        width: 100%;
+        color: var(--secondry-color);
+        font-size: var(--medium-size);
+        font-weight: var(--normal-font-weight);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        color: var(--primary-color);
+        border: 1.2px solid var(--primary-color);
+        padding: 16px 20px;
+        border-radius: 10px;
+        outline: 0;
+    }
+
+    .input option {
+        font-weight: 300;
+    }
+
+    .input select {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background-image: url('../../../../public/img/arrow.png');
+        background-repeat: no-repeat;
+        background-position: calc(100% - 10px) center;
+        padding-right: 30px;
+    }
+
+    .input input:focus {
+        border: 2px solid var(--primary-color);
+    }
+
+    .btns {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .btn {
+        cursor: pointer;
+        background-color: var(--primary-color);
+        color: var(--white-color);
+        padding: 10px 26px;
+        border-radius: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        transition: var(--transition-3);
+        width: fit-content;
+        border: 0;
+        outline: 0;
+    }
+
+    .btn a {
+        color: var(--white-color);
+    }
+
+    .btn:hover {
+        box-shadow: var(--shadow-hover);
+        font-weight: 500;
+    }
+
+    .address__fields.address__fields {
+        width: 100%;
+        gap: 10px;
+        display: flex;
+    }
+
+    .address__popup .address__section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .address__popup .subheading {
+        font-size: 32px;
+        color: var(--primary-color);
+    }
+
+    @media (max-width:786) {
+        .address__popup {
+            width: 70%;
+        }
+
+        .address__popup .address__fields {
+            flex-direction: column;
+        }
+
+    }
+
     /* sidebar */
     /* sidebar */
 
@@ -291,14 +437,14 @@ body {
             }
 
             .table {
-                max-width: 100%;
-                overflow-x: scroll;
+                // width: 1200px;
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
                 border-radius: 8px;
                 background: var(--white-color);
                 padding: 24px;
+                overflow-x: scroll;
                 box-shadow: 0px 2px 6px 4px rgba(50, 71, 92, 0.02), 0px 4px 9px 1px rgba(50, 71, 92, 0.04), 0px 2px 9px 0px rgba(50, 71, 92, 0.06);
 
                 .filter__input {
@@ -325,7 +471,6 @@ body {
                     font-weight: 400;
                     line-height: 24px;
                     letter-spacing: 0.15px;
-
                     background-color: transparent;
                     border: 0;
                     width: 100%;
@@ -344,22 +489,22 @@ body {
                     .row {
                         padding: 10px 20px;
                         height: 60px;
-                        width: 100%;
+                        // width: 100%;
                         display: flex;
                         align-items: center;
-                        justify-content: space-between;
+                        gap: 30px;
 
                         .data {
                             overflow: hidden;
                             width: 100px;
-                              
+
                             abbr,
                             span {
                                 color: rgba(50, 71, 92, 0.87);
                                 font-family: Public Sans;
                                 font-size: 12px;
                                 font-style: normal;
-                                font-weight: 500;
+                                font-weight: 300;
                                 line-height: 24px;
                                 letter-spacing: 0.17px;
                                 text-transform: uppercase;
@@ -369,6 +514,9 @@ body {
                                 color: var(--primary-color);
                             }
 
+                            .action {
+                                font-size: 16px;
+                            }
                         }
 
                         .address__data {

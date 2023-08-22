@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useGetAllEmployeesQuery } from "../../redux/services/DZapi";
+import Editpopup from "../../component/Editpopup/Editpopup";
 function Home() {
+  const [userid, setUserid] = useState()
   const {
     data: getallemployesdata,
     error,
@@ -35,148 +37,158 @@ function Home() {
     return addedDate >= sevenDaysAgo;
   });
   console.log(filteredUnActiveEmployees);
+  const openPopup = (id) => {
+    setUserid(id)
+    const popup = document.getElementById("address__popup");
+    if (popup) {
+      popup.style.visibility = "visible";
+    }
+  };
   return (
-    <div className="main__dashboard">
-      <div className="search__bar">
-        <div className="search">
-          <i className="ri-search-line search__icon" />
-          <input
-            className="search__input"
-            type="text"
-            placeholder="Search (Ctrl+/)"
-          />
-        </div>
-        <div className="profile">
-          <img src="img/Avatar.png" alt="Avatar" />
-        </div>
-      </div>
-      <div className="dashboard__cards">
-        <h1 className="heading">Dashboard</h1>
-        <div className="cards">
-          <div className="card">
-            <i className="user__icon ri-user-4-line" />
-            <span className="heading">Total Clients</span>
-            <span className="number">{getallemployes?.length}</span>
+    <>
+      <Editpopup id={userid}/>
+      <div className="main__dashboard">
+        <div className="search__bar">
+          <div className="search">
+            <i className="ri-search-line search__icon" />
+            <input
+              className="search__input"
+              type="text"
+              placeholder="Search (Ctrl+/)"
+            />
           </div>
-          <div className="card">
-            <i className="user__icon ri-add-circle-line" />
-            <span className="heading">Active Clients</span>
-            <span className="number">{filteredActiveEmployees?.length}</span>
-          </div>
-          <div className="card">
-            <i className="user__icon ri-close-line" />
-            <span className="heading">Un Active Clients</span>
-            <span className="number">{filteredUnActiveEmployees?.length}</span>
-          </div>
-          <div className="card">
-            <i className="user__icon ri-add-line" />
-            <span className="heading">New Clients</span>
-            <span className="number">{filteredNewClients?.length}</span>
+          <div className="profile">
+            <img src="img/Avatar.png" alt="Avatar" />
           </div>
         </div>
-      </div>
-      <div className="filter__table">
-        <div className="filter">
-          <h1 className="heading">Filter</h1>
-          <div className="filters">
+        <div className="dashboard__cards">
+          <h1 className="heading">Dashboard</h1>
+          <div className="cards">
+            <div className="card">
+              <i className="user__icon ri-user-4-line" />
+              <span className="heading">Total Clients</span>
+              <span className="number">{getallemployes?.length}</span>
+            </div>
+            <div className="card">
+              <i className="user__icon ri-add-circle-line" />
+              <span className="heading">Active Clients</span>
+              <span className="number">{filteredActiveEmployees?.length}</span>
+            </div>
+            <div className="card">
+              <i className="user__icon ri-close-line" />
+              <span className="heading">Un Active Clients</span>
+              <span className="number">{filteredUnActiveEmployees?.length}</span>
+            </div>
+            <div className="card">
+              <i className="user__icon ri-add-line" />
+              <span className="heading">New Clients</span>
+              <span className="number">{filteredNewClients?.length}</span>
+            </div>
+          </div>
+        </div>
+        <div className="filter__table">
+          <div className="filter">
+            <h1 className="heading">Filter</h1>
+            <div className="filters">
+              <div className="filter__input">
+                <input type="text" disabled placeholder="Select Status" />
+                <i className="ri-arrow-down-s-fill arrow__icon" />
+              </div>
+              <div className="filter__input">
+                <input type="text" disabled placeholder="Date" />
+                <i className="ri-arrow-down-s-fill arrow__icon" />
+              </div>
+            </div>
+          </div>
+          <div className="table">
             <div className="filter__input">
-              <input type="text" disabled placeholder="Select Status" />
+              <input type="text" disabled="" placeholder="Action" />
               <i className="ri-arrow-down-s-fill arrow__icon" />
             </div>
-            <div className="filter__input">
-              <input type="text" disabled placeholder="Date" />
-              <i className="ri-arrow-down-s-fill arrow__icon" />
-            </div>
-          </div>
-        </div>
-        <div className="table">
-          <div className="filter__input">
-            <input type="text" disabled="" placeholder="Action" />
-            <i className="ri-arrow-down-s-fill arrow__icon" />
-          </div>
-          <div className="rows__data">
-            <div className="row heading__row">
-              <div className="data check">
-                <input type="checkbox" />
-              </div>
-              <div className="data">
-                <span className="data__heading">#ID</span>
-              </div>
-              <div className="data">
-                <span className="data__heading client__name">Client</span>
-              </div>
-              <div className="data">
-                <span className="data__heading">Phone</span>
-              </div>
-              <div className="data">
-                <span className="data__heading">Email</span>
-              </div>
-              <div className="data address__data">
-                <span className="data__heading ">Address</span>
-              </div>
-              <div className="data">
-                <span className="data__heading">Roll</span>
-              </div>
-              <div className="data">
-                <span className="data__heading">Active</span>
-              </div>
-              <div className="data">
-                <span className="data__heading">Action</span>
-              </div>
-            </div>
-
-            {getallemployes?.map((adata) => {
-              const data = adata?.attributes;
-              return (
-                <div className="row" key={data?.employeeId}>
-                  <div className="data check">
-                    <input type="checkbox" />
-                  </div>
-                  <div className="data">
-                    <span className="data__content user__id">
-                      {data?.employeeId}
-                    </span>
-                  </div>
-                  <div className="data">
-                    <span className="data__content client__name">
-                      {data?.name}
-                    </span>
-                  </div>
-                  <div className="data">
-                    <span className="data__content">{data?.phone}</span>
-                  </div>
-                  <div className="data">
-                    <span className="data__content">{data?.employeeEmail}</span>
-                  </div>
-                  <div className="data address__data">
-                    <abbr className="data__content" title={data?.address}>
-                      {data?.address}
-                    </abbr>
-                  </div>
-                  <div className="data">
-                    <span className="data__content paid">
-                      {data?.employeeRole}
-                    </span>
-                  </div>
-                  <div className="data">
-                    <span className="data__content paid">
-                      {data?.status ? "Active" : "UnActive"}
-                    </span>
-                  </div>
-                  <div className="data">
-                    <span className="data__content action">
-                      <i class="ri-delete-bin-2-line"></i>
-                      <i class="ri-edit-2-line"></i>
-                      <i class="ri-eye-line"></i>
-                    </span>
-                  </div>
+            <div className="rows__data">
+              <div className="row heading__row">
+                <div className="data check">
+                  <input type="checkbox" />
                 </div>
-              );
-            })}
+                <div className="data">
+                  <span className="data__heading">#ID</span>
+                </div>
+                <div className="data">
+                  <span className="data__heading client__name">Client</span>
+                </div>
+                <div className="data">
+                  <span className="data__heading">Phone</span>
+                </div>
+                <div className="data">
+                  <span className="data__heading">Email</span>
+                </div>
+                <div className="data address__data">
+                  <span className="data__heading ">Address</span>
+                </div>
+                <div className="data">
+                  <span className="data__heading">Roll</span>
+                </div>
+                <div className="data">
+                  <span className="data__heading">Active</span>
+                </div>
+                <div className="data">
+                  <span className="data__heading">Action</span>
+                </div>
+              </div>
+
+              {getallemployes?.map((adata) => {
+                const data = adata?.attributes;
+                return (
+                  <div className="row" key={data?.employeeId}>
+                    <div className="data check">
+                      <input type="checkbox" />
+                    </div>
+                    <div className="data">
+                      <span className="data__content user__id">
+                        {adata?.id}
+                      </span>
+                    </div>
+                    <div className="data">
+                      <span className="data__content client__name">
+                        {data?.name}
+                      </span>
+                    </div>
+                    <div className="data">
+                      <span className="data__content">{data?.phone}</span>
+                    </div>
+                    <div className="data">
+                      <span className="data__content">{data?.employeeEmail}</span>
+                    </div>
+                    <div className="data address__data">
+                      <abbr className="data__content" title={data?.address}>
+                        {data?.address}
+                      </abbr>
+                    </div>
+                    <div className="data">
+                      <span className="data__content paid">
+                        {data?.employeeRole}
+                      </span>
+                    </div>
+                    <div className="data">
+                      <span className="data__content paid">
+                        {data?.status ? "Active" : "UnActive"}
+                      </span>
+                    </div>
+                    <div className="data">
+                      <span className="data__content action">
+                        <i class="ri-eye-line" ></i>
+                        <i class="ri-edit-2-line" onClick={()=> openPopup(adata?.id)}></i>
+                        <i class="ri-delete-bin-2-line"></i>
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

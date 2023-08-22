@@ -42,6 +42,136 @@ body {
   /* sidebar */
   /* sidebar */
 }
+body .address__popup {
+  gap: 10px;
+  width: 60%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  background-color: var(--white-color);
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  animation: unipop 0.3s 1;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+}
+body .input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+body .input label {
+  color: var(--secondry-color);
+  font-size: var(--medium-size);
+  font-weight: var(--normal-font-weight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+body .input input {
+  width: 100%;
+  color: var(--primary-color);
+  border: 1.2px solid var(--primary-color);
+  padding: 16px 20px;
+  border-radius: 10px;
+  outline: 0;
+}
+body .input input::-moz-placeholder {
+  color: var(--primary-color);
+}
+body .input input::placeholder {
+  color: var(--primary-color);
+}
+body .input select {
+  padding-right: 10px;
+  width: 100%;
+  color: var(--secondry-color);
+  font-size: var(--medium-size);
+  font-weight: var(--normal-font-weight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--primary-color);
+  border: 1.2px solid var(--primary-color);
+  padding: 16px 20px;
+  border-radius: 10px;
+  outline: 0;
+}
+body .input option {
+  font-weight: 300;
+}
+body .input select {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background-image: url("../../../../public/img/arrow.png");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 10px) center;
+  padding-right: 30px;
+}
+body .input input:focus {
+  border: 2px solid var(--primary-color);
+}
+body .btns {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+body .btn {
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 10px 26px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  transition: var(--transition-3);
+  width: -moz-fit-content;
+  width: fit-content;
+  border: 0;
+  outline: 0;
+}
+body .btn a {
+  color: var(--white-color);
+}
+body .btn:hover {
+  box-shadow: var(--shadow-hover);
+  font-weight: 500;
+}
+body .address__fields.address__fields {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+}
+body .address__popup .address__section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+body .address__popup .subheading {
+  font-size: 32px;
+  color: var(--primary-color);
+}
+@media (max-width: 786) {
+  body .address__popup {
+    width: 70%;
+  }
+  body .address__popup .address__fields {
+    flex-direction: column;
+  }
+}
 body .side__bar {
   display: flex;
   flex-direction: column;
@@ -269,14 +399,13 @@ body .main__dashboard .filter__table .filter .filter__input > input {
   outline: none;
 }
 body .main__dashboard .filter__table .table {
-  max-width: 100%;
-  overflow-x: scroll;
   display: flex;
   flex-direction: column;
   gap: 16px;
   border-radius: 8px;
   background: var(--white-color);
   padding: 24px;
+  overflow-x: scroll;
   box-shadow: 0px 2px 6px 4px rgba(50, 71, 92, 0.02), 0px 4px 9px 1px rgba(50, 71, 92, 0.04), 0px 2px 9px 0px rgba(50, 71, 92, 0.06);
 }
 body .main__dashboard .filter__table .table .filter__input {
@@ -317,10 +446,9 @@ body .main__dashboard .filter__table .table .rows__data .heading__row {
 body .main__dashboard .filter__table .table .rows__data .row {
   padding: 10px 20px;
   height: 60px;
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 30px;
 }
 body .main__dashboard .filter__table .table .rows__data .row .data {
   overflow: hidden;
@@ -332,13 +460,16 @@ body .main__dashboard .filter__table .table .rows__data .row .data span {
   font-family: Public Sans;
   font-size: 12px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 300;
   line-height: 24px;
   letter-spacing: 0.17px;
   text-transform: uppercase;
 }
 body .main__dashboard .filter__table .table .rows__data .row .data .user__id {
   color: var(--primary-color);
+}
+body .main__dashboard .filter__table .table .rows__data .row .data .action {
+  font-size: 16px;
 }
 body .main__dashboard .filter__table .table .rows__data .row .address__data {
   width: 500px;
