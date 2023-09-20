@@ -8,7 +8,6 @@ export const DZapi = createApi({
 
   baseQuery: fetchBaseQuery({
     baseUrl: Config.serverUrl,
-
   }),
 
   //******************Api Query******************//
@@ -16,11 +15,27 @@ export const DZapi = createApi({
   endpoints: (builder) => ({
     getAllEmployees: builder.query({query: () => "employees",}),
     getOneEmployees: builder.query({query: (id) => `employees/${id}`,}), 
+    addEmployees: builder.mutation({
+      query: (data) => ({
+        url: "employees",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    updateEmployees: builder.mutation({
+      query: ({  data, id }) => ({
+        url: `employees/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+    
   }),
 });
 
 export const {
   useGetAllEmployeesQuery,
   useGetOneEmployeesQuery,
-
+  useAddEmployeesMutation,
+  useUpdateEmployeesMutation,
 } = DZapi;

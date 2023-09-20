@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useGetAllEmployeesQuery } from "../../redux/services/DZapi";
-import Editpopup from "../../component/Editpopup/Editpopup";
+import AddUpdateData from "../../component/AddUpdateData/AddUpdateData";
+import Table from "../../component/Table/Table";
 function Home() {
-  const [userid, setUserid] = useState()
+  const [userid, setUserid] = useState();
+  const [show, setShow] = useState(false);
+  const [isViewMode, setIsViewMode] = useState(false);
   const {
     data: getallemployesdata,
     error,
@@ -37,16 +40,15 @@ function Home() {
     return addedDate >= sevenDaysAgo;
   });
   console.log(filteredUnActiveEmployees);
-  const openPopup = (id) => {
-    setUserid(id)
-    const popup = document.getElementById("address__popup");
-    if (popup) {
-      popup.style.visibility = "visible";
-    }
+
+  const openPopup = (id, isView) => {
+    setUserid(id);
+    setShow(true);
+    setIsViewMode(isView); // Set the view mode
   };
   return (
     <>
-      <Editpopup id={userid}/>
+      {show ? <AddUpdateData id={userid} setShow={setShow} isViewMode={isViewMode} /> : null}
       <div className="main__dashboard">
         <div className="search__bar">
           <div className="search">
@@ -77,7 +79,9 @@ function Home() {
             <div className="card">
               <i className="user__icon ri-close-line" />
               <span className="heading">Un Active Clients</span>
-              <span className="number">{filteredUnActiveEmployees?.length}</span>
+              <span className="number">
+                {filteredUnActiveEmployees?.length}
+              </span>
             </div>
             <div className="card">
               <i className="user__icon ri-add-line" />
@@ -87,105 +91,7 @@ function Home() {
           </div>
         </div>
         <div className="filter__table">
-          <div className="filter">
-            <h1 className="heading">Filter</h1>
-            <div className="filters">
-              <div className="filter__input">
-                <input type="text" disabled placeholder="Select Status" />
-                <i className="ri-arrow-down-s-fill arrow__icon" />
-              </div>
-              <div className="filter__input">
-                <input type="text" disabled placeholder="Date" />
-                <i className="ri-arrow-down-s-fill arrow__icon" />
-              </div>
-            </div>
-          </div>
-          <div className="table">
-            <div className="filter__input">
-              <input type="text" disabled="" placeholder="Action" />
-              <i className="ri-arrow-down-s-fill arrow__icon" />
-            </div>
-            <div className="rows__data">
-              <div className="row heading__row">
-                <div className="data check">
-                  <input type="checkbox" />
-                </div>
-                <div className="data">
-                  <span className="data__heading">#ID</span>
-                </div>
-                <div className="data">
-                  <span className="data__heading client__name">Client</span>
-                </div>
-                <div className="data">
-                  <span className="data__heading">Phone</span>
-                </div>
-                <div className="data">
-                  <span className="data__heading">Email</span>
-                </div>
-                <div className="data address__data">
-                  <span className="data__heading ">Address</span>
-                </div>
-                <div className="data">
-                  <span className="data__heading">Roll</span>
-                </div>
-                <div className="data">
-                  <span className="data__heading">Active</span>
-                </div>
-                <div className="data">
-                  <span className="data__heading">Action</span>
-                </div>
-              </div>
-
-              {getallemployes?.map((adata) => {
-                const data = adata?.attributes;
-                return (
-                  <div className="row" key={data?.employeeId}>
-                    <div className="data check">
-                      <input type="checkbox" />
-                    </div>
-                    <div className="data">
-                      <span className="data__content user__id">
-                        {adata?.id}
-                      </span>
-                    </div>
-                    <div className="data">
-                      <span className="data__content client__name">
-                        {data?.name}
-                      </span>
-                    </div>
-                    <div className="data">
-                      <span className="data__content">{data?.phone}</span>
-                    </div>
-                    <div className="data">
-                      <span className="data__content">{data?.employeeEmail}</span>
-                    </div>
-                    <div className="data address__data">
-                      <abbr className="data__content" title={data?.address}>
-                        {data?.address}
-                      </abbr>
-                    </div>
-                    <div className="data">
-                      <span className="data__content paid">
-                        {data?.employeeRole}
-                      </span>
-                    </div>
-                    <div className="data">
-                      <span className="data__content paid">
-                        {data?.status ? "Active" : "UnActive"}
-                      </span>
-                    </div>
-                    <div className="data">
-                      <span className="data__content action">
-                        <i class="ri-eye-line" ></i>
-                        <i class="ri-edit-2-line" onClick={()=> openPopup(adata?.id)}></i>
-                        <i class="ri-delete-bin-2-line"></i>
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <Table  getallemployes={getallemployes} openPopup={openPopup} />
         </div>
       </div>
     </>

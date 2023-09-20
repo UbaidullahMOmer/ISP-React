@@ -60,7 +60,6 @@ body .address__popup {
   transition: 0.3s ease-in-out;
   animation: unipop 0.3s 1;
   transform: translate(-50%, -50%);
-  visibility: hidden;
 }
 body .input {
   width: 100%;
@@ -407,6 +406,13 @@ body .main__dashboard .filter__table .table {
   padding: 24px;
   overflow-x: scroll;
   box-shadow: 0px 2px 6px 4px rgba(50, 71, 92, 0.02), 0px 4px 9px 1px rgba(50, 71, 92, 0.04), 0px 2px 9px 0px rgba(50, 71, 92, 0.06);
+}
+body .main__dashboard .filter__table .table .filter__row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
 }
 body .main__dashboard .filter__table .table .filter__input {
   display: flex;

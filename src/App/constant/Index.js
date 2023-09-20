@@ -1,5 +1,6 @@
 // const serverUrl = '';
-const serverUrl = "http://localhost:1337/api/";
+// const serverUrl = "http://localhost:1337/api/";
+const serverUrl = "https://strapi-146033-0.cloudclusters.net/api/";
 
 export const Config = {
   secretPass: "XkhZG4fW2t2W",
