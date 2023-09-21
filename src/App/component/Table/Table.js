@@ -6,16 +6,9 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
 
   const handleDeleteEmployee = async (employeeId) => {
     try {
-      // Call the deleteEmployees function with the employeeId to delete
       await deleteEmployees(employeeId);
       refetch()
-      // After successful deletion, you can refresh the list of employees
-      // You may use your API fetch function or Redux action to do this
-      // Example: await yourRefreshFunction();
-
-      // Optionally, you can show a success message or perform other actions
     } catch (error) {
-      // Handle any errors that occur during deletion, e.g., show an error message
     }
   };
 

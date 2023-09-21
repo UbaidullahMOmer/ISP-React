@@ -401,6 +401,7 @@ body .main__dashboard .filter__table .filter .filter__input > input {
 }
 body .main__dashboard .filter__table .table {
   width: 100%;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   gap: 16px;

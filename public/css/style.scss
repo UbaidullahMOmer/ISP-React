@@ -379,7 +379,7 @@ body {
             flex-direction: column;
             gap: 30px;
             overflow-x: scroll;
-
+            
             .filter {
                 display: flex;
                 flex-direction: column;
@@ -439,7 +439,8 @@ body {
             }
 
             .table {
-                width: 100%;
+                width: 100%;          
+                min-height: 500px;
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
