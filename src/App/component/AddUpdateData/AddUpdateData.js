@@ -3,6 +3,7 @@ import {
   useAddEmployeesMutation,
   useGetOneEmployeesQuery,
   useUpdateEmployeesMutation,
+  useGetAllEmployeesRoleQuery
 } from "../../redux/services/DZapi";
 
 function AddUpdateData({ id, setShow, isViewMode, refetch }) {

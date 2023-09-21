@@ -35,6 +35,7 @@ export const DZapi = createApi({
         method: "DELETE",
       }),
     }),
+    getAllEmployeesRole: builder.query({query: () => "employee-roles",}),
     
   }),
 });
@@ -45,4 +46,5 @@ export const {
   useAddEmployeesMutation,
   useUpdateEmployeesMutation,
   useDeleteEmployeesMutation,
+  useGetAllEmployeesRoleQuery,
 } = DZapi;

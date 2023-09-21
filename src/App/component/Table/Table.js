@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import { useDeleteEmployeesMutation } from "../../redux/services/DZapi";
 
 function Table({ getallemployes, openPopup, setShow, refetch }) {
+  const [nameFilter, setNameFilter] = useState(""); 
   const [deleteEmployees] = useDeleteEmployeesMutation();
 
   const handleDeleteEmployee = async (employeeId) => {
@@ -11,13 +12,20 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
     } catch (error) {
     }
   };
-
+  const filteredUsers = getallemployes?.filter((adata) => {
+    const data = adata?.attributes;
+    return data?.name.toLowerCase().includes(nameFilter.toLowerCase());
+  });
   return (
     <div className="table">
       <div className="filter__row">
-        <div className="filter__input">
-          <input type="text" disabled placeholder="Action" />
-          <i className="ri-arrow-down-s-fill arrow__icon" />
+      <div className="filter__input">
+          <input
+            type="text"
+            placeholder="Filter by Name"
+            value={nameFilter}
+            onChange={(e) => setNameFilter(e.target.value)}
+          />
         </div>
         <button className="btn" onClick={() => openPopup()}>
           <i className="ri-add-circle-line"></i>
@@ -52,7 +60,7 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
           </div>
         </div>
 
-        {getallemployes?.map((adata) => {
+        {filteredUsers?.map((adata) => {
           const data = adata?.attributes;
           return (
             <div className="row" key={adata?.id}>
