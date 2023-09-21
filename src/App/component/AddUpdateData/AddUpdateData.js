@@ -5,12 +5,18 @@ import {
   useUpdateEmployeesMutation,
 } from "../../redux/services/DZapi";
 
-function AddUpdateData({ id, setShow, isViewMode }) {
-  const [updateEmployee, { isLoading: updateLoading, isError: updateError, error: updateErrorObj }] = useUpdateEmployeesMutation();
-  const [addEmployee, { isLoading: addLoading, isError: addError, error: addErrorObj }] = useAddEmployeesMutation();
+function AddUpdateData({ id, setShow, isViewMode, refetch }) {
+  const [
+    updateEmployee,
+    { isLoading: updateLoading, isError: updateError, error: updateErrorObj },
+  ] = useUpdateEmployeesMutation();
+  const [
+    addEmployee,
+    { isLoading: addLoading, isError: addError, error: addErrorObj },
+  ] = useAddEmployeesMutation();
   const { data: getOneEmployeesData } = useGetOneEmployeesQuery(id);
-   // Fetch user data based on the provided id
-  
+  // Fetch user data based on the provided id
+
   const [data, setData] = useState({
     name: "",
     number: "",
@@ -47,7 +53,9 @@ function AddUpdateData({ id, setShow, isViewMode }) {
   const handleAddUser = async () => {
     try {
       const response = await addEmployee({ data });
+      refetch()
       // Handle successful user creation here (e.g., show a success message)
+      console.log("User added Data:", data);
       console.log("User added successfully:", response);
       closePopup();
     } catch (err) {
@@ -59,6 +67,7 @@ function AddUpdateData({ id, setShow, isViewMode }) {
   const handleUpdateUser = async () => {
     try {
       const response = await updateEmployee({ id, data });
+      refetch()
       // Handle successful user update here
       console.log("User updated successfully:", response);
       closePopup();
@@ -77,8 +86,9 @@ function AddUpdateData({ id, setShow, isViewMode }) {
   };
   return (
     <div className="address__popup" id="address__popup">
-    <h1 className="subheading">{isViewMode ? "View Address" : id? "Update Address": "Add Address"}</h1>
-
+      <h1 className="subheading">
+        {isViewMode ? "View Address" : id ? "Update Address" : "Add Address"}
+      </h1>
 
       <div className="address__fields">
         <div className="address__section">
@@ -124,7 +134,12 @@ function AddUpdateData({ id, setShow, isViewMode }) {
               disabled={isViewMode} // Disable the input field in view mode
             />
           </div>
-          <div className="input">
+
+
+        </div>
+
+        <div className="address__section">
+        <div className="input">
             <label htmlFor="roll" required="">
               Roll<span>*</span>
             </label>
@@ -138,7 +153,7 @@ function AddUpdateData({ id, setShow, isViewMode }) {
               disabled={isViewMode} // Disable the input field in view mode
             />
           </div>
-          <div className="input">
+        <div className="input">
             <label htmlFor="package" required="">
               Package<span>*</span>
             </label>

@@ -17,7 +17,7 @@ export const DZapi = createApi({
     getOneEmployees: builder.query({query: (id) => `employees/${id}`,}), 
     addEmployees: builder.mutation({
       query: (data) => ({
-        url: "employees",
+        url: `employees`,
         method: "POST",
         body: data,
       }),
@@ -29,6 +29,12 @@ export const DZapi = createApi({
         body: data,
       }),
     }),
+    deleteEmployees: builder.mutation({
+      query: (id) => ({
+        url: `employees/${id}`,
+        method: "DELETE",
+      }),
+    }),
     
   }),
 });
@@ -38,4 +44,5 @@ export const {
   useGetOneEmployeesQuery,
   useAddEmployeesMutation,
   useUpdateEmployeesMutation,
+  useDeleteEmployeesMutation,
 } = DZapi;

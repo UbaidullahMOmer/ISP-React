@@ -1,6 +1,24 @@
 import React from "react";
+import { useDeleteEmployeesMutation } from "../../redux/services/DZapi";
 
-function Table({ getallemployes, openPopup, setShow }) {
+function Table({ getallemployes, openPopup, setShow, refetch }) {
+  const [deleteEmployees] = useDeleteEmployeesMutation();
+
+  const handleDeleteEmployee = async (employeeId) => {
+    try {
+      // Call the deleteEmployees function with the employeeId to delete
+      await deleteEmployees(employeeId);
+      refetch()
+      // After successful deletion, you can refresh the list of employees
+      // You may use your API fetch function or Redux action to do this
+      // Example: await yourRefreshFunction();
+
+      // Optionally, you can show a success message or perform other actions
+    } catch (error) {
+      // Handle any errors that occur during deletion, e.g., show an error message
+    }
+  };
+
   return (
     <div className="table">
       <div className="filter__row">
@@ -18,7 +36,7 @@ function Table({ getallemployes, openPopup, setShow }) {
           <div className="data check">
             <input type="checkbox" />
           </div>
-          <div className="data">
+          <div className="data check">
             <span className="data__heading">#ID</span>
           </div>
           <div className="data">
@@ -48,19 +66,19 @@ function Table({ getallemployes, openPopup, setShow }) {
               <div className="data check">
                 <input type="checkbox" />
               </div>
-              <div className="data">
+              <div className="data check">
                 <span className="data__content user__id">{adata?.id}</span>
               </div>
-              <div className="data">
+              <div className="data ">
                 <span className="data__content client__name">{data?.name}</span>
               </div>
               <div className="data">
                 <span className="data__content">{data?.number}</span>
               </div>
               <div className="data address__data">
-                <abbr className="data__content" title={data?.address}>
+                <span className="data__content" title={data?.address}>
                   {data?.address}
-                </abbr>
+                </span>
               </div>
               <div className="data">
                 <span className="data__content paid">{data?.roll}</span>
@@ -77,14 +95,18 @@ function Table({ getallemployes, openPopup, setShow }) {
               </div>
               <div className="data">
                 <span className="data__content action">
-                  <i className="ri-eye-line"
-                  onClick={() => openPopup(adata?.id, true)}
+                  <i
+                    className="ri-eye-line"
+                    onClick={() => openPopup(adata?.id, true)}
                   ></i>
                   <i
                     className="ri-edit-2-line"
                     onClick={() => openPopup(adata?.id)}
                   ></i>
-                  <i className="ri-delete-bin-2-line"></i>
+                  <i
+                    className="ri-delete-bin-2-line"
+                    onClick={() => handleDeleteEmployee(adata?.id)}
+                  ></i>
                 </span>
               </div>
             </div>

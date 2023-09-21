@@ -15,7 +15,7 @@
 
 /* variable */
 :root {
-    --primary-color: #;
+    --primary-color: #FF5050;
     --primary-light: rgba(255, 105, 105, 0.16);
     --text-color: rgba(50, 71, 92, 1);
     --text-color-light: rgba(50, 71, 92, 0.68);
@@ -324,6 +324,7 @@ body {
             flex-direction: column;
             gap: 24px;
 
+
             .heading {
                 color: var(--primary-color);
                 font-size: 32px;
@@ -333,6 +334,7 @@ body {
             .cards {
                 display: flex;
                 align-items: center;
+                flex-wrap: wrap;
                 gap: 24px;
             }
 
@@ -376,6 +378,7 @@ body {
             display: flex;
             flex-direction: column;
             gap: 30px;
+            overflow-x: scroll;
 
             .filter {
                 display: flex;
@@ -436,7 +439,7 @@ body {
             }
 
             .table {
-                // width: 1200px;
+                width: 100%;
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
@@ -446,9 +449,9 @@ body {
                 overflow-x: scroll;
                 box-shadow: 0px 2px 6px 4px rgba(50, 71, 92, 0.02), 0px 4px 9px 1px rgba(50, 71, 92, 0.04), 0px 2px 9px 0px rgba(50, 71, 92, 0.06);
 
-                .filter__row{ 
+                .filter__row {
                     display: flex;
-                    flex-direction: row; 
+                    flex-direction: row;
                     gap: 16px;
                     align-items: center;
                     justify-content: space-between;
@@ -496,10 +499,11 @@ body {
                     .row {
                         padding: 10px 20px;
                         height: 60px;
-                        // width: 100%;
+                        width: 100%;
                         display: flex;
                         align-items: center;
                         gap: 30px;
+                        justify-content: space-between;
 
                         .data {
                             overflow: hidden;
@@ -511,7 +515,7 @@ body {
                                 font-family: Public Sans;
                                 font-size: 12px;
                                 font-style: normal;
-                                font-weight: 300;
+                                font-weight: 400;
                                 line-height: 24px;
                                 letter-spacing: 0.17px;
                                 text-transform: uppercase;
@@ -527,11 +531,13 @@ body {
                         }
 
                         .address__data {
-                            width: 500px;
+                            display: flex;
+                            width: 400px;
                             overflow: hidden;
                         }
 
                         .check {
+                            overflow: visible;
                             width: fit-content;
                         }
 
@@ -552,6 +558,17 @@ body {
                             text-transform: uppercase;
                         }
 
+                        .action {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            i {
+                                cursor: pointer;
+                                font-size: 20px;
+                            }
+                        }
+
                     }
                 }
 
@@ -570,4 +587,42 @@ body {
 
     }
 
+}
+
+
+
+
+
+
+
+
+@media (max-width:1340px) {
+    body {
+        .main__dashboard {
+            .filter__table {
+                .table {
+                    max-width: 950px;
+                    overflow-x: scroll;
+
+                    .rows__data {
+                        .row {
+                            width: auto;
+
+                            .address__data {
+                                width: 400px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width:790px) {
+    body {
+        .side__bar {
+            display: none;
+        }
+    }
 }

@@ -8,6 +8,7 @@ function Home() {
   const [isViewMode, setIsViewMode] = useState(false);
   const {
     data: getallemployesdata,
+    refetch,
     error,
     isLoading,
   } = useGetAllEmployeesQuery();
@@ -39,6 +40,7 @@ function Home() {
     sevenDaysAgo.setDate(currentDate.getDate() - 7);
     return addedDate >= sevenDaysAgo;
   });
+
   console.log(filteredUnActiveEmployees);
 
   const openPopup = (id, isView) => {
@@ -48,7 +50,7 @@ function Home() {
   };
   return (
     <>
-      {show ? <AddUpdateData id={userid} setShow={setShow} isViewMode={isViewMode} /> : null}
+      {show ? <AddUpdateData id={userid} setShow={setShow} isViewMode={isViewMode} refetch={refetch} /> : null}
       <div className="main__dashboard">
         <div className="search__bar">
           <div className="search">
@@ -91,7 +93,7 @@ function Home() {
           </div>
         </div>
         <div className="filter__table">
-          <Table  getallemployes={getallemployes} openPopup={openPopup} />
+          <Table  getallemployes={getallemployes} openPopup={openPopup} refetch={refetch} />
         </div>
       </div>
     </>
