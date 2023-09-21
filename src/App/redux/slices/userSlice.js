@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { DZapi } from "../services/DZapi";
 
 // Async thunk to fetch login user data
 export const fetchLoginUser = createAsyncThunk(
