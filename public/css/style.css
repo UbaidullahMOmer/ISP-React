@@ -180,10 +180,12 @@ body .address__popup .subheading {
 
 body .side__bar {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-  min-width: 250px;
+  width: fit-content;
   height: 100vh;
   box-shadow: 0px 1px 4px 2px rgba(50, 71, 92, 0.02), 0px 2px 6px 1px rgba(50, 71, 92, 0.04), 0px 1px 6px 2px rgba(50, 71, 92, 0.06);
   position: relative;
@@ -192,29 +194,28 @@ body .side__bar {
 body .side__bar .logo {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: fit-content;
   gap: 8px;
+
 }
 
-body .side__bar .logo .logo__text {
-  color: var(--text-color);
-  font-family: Public Sans;
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 24px;
-  letter-spacing: 0.15px;
+body .side__bar .logo img{
+  height: 40px;
 }
 
 body .side__bar .sidebar__links {
   display: flex;
   flex-direction: column;
   align-items: start;
+  width: fit-content;
 }
 
 body .side__bar .sidebar__links .side__link {
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 100%;
+  width: fit-content;
   padding: 10px 20px;
   color: var(--text-color-light);
   font-family: Public Sans;
@@ -297,6 +298,9 @@ body .main__dashboard .category__filter .active__categary {
 body .main__dashboard .category__filter .category {
   cursor: pointer;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   background-color: var(--white-color);
   color: var(--secondry-color);
@@ -678,6 +682,9 @@ body .main__dashboard .filter__table .table::-webkit-scrollbar-thumb {
   body .main__dashboard .dashboard__cards .card {
     width: 400px;
   }
+}
+@media (max-width: 580px) {
+ 
 }
 
 @media (max-width: 790px) {

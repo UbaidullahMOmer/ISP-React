@@ -19,13 +19,8 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
   return (
     <div className="table">
       <div className="filter__row">
-      <div className="filter__input">
-          <input
-            type="text"
-            placeholder="Filter by Name"
-            value={nameFilter}
-            onChange={(e) => setNameFilter(e.target.value)}
-          />
+        <div className="filter__input">
+          <span>All Data</span>
         </div>
         <button className="btn" onClick={() => openPopup()}>
           <i className="ri-add-circle-line"></i>

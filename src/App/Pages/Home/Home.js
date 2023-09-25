@@ -50,7 +50,14 @@ function Home() {
   };
   return (
     <>
-      {show ? <AddUpdateData id={userid} setShow={setShow} isViewMode={isViewMode} refetch={refetch} /> : null}
+      {show ? (
+        <AddUpdateData
+          id={userid}
+          setShow={setShow}
+          isViewMode={isViewMode}
+          refetch={refetch}
+        />
+      ) : null}
       <div className="main__dashboard">
         <div className="search__bar">
           <div className="search">
@@ -94,26 +101,33 @@ function Home() {
         </div>
 
         <div className="category__filter">
-
           <div className="categories">
-
-            <div className="category active__categary " /*onClick={() => handleCategoryClick("All")}*/ >
-              User
+            <div
+              className="category active__categary " /*onClick={() => handleCategoryClick("All")}*/
+            >
+              <i class="ri-close-line"></i>
+              <span>User</span>
+              <i class="ri-arrow-down-s-line"></i>
             </div>
-
-            <div className="category " /*onClick={() => handleCategoryClick("All")}*/ >
-              Active User
+            <div
+              className="category " /*onClick={() => handleCategoryClick("All")}*/
+            >
+              <span>Active User</span>
+              <i class="ri-arrow-down-s-line"></i>
             </div>
-
-            <div className="category " /*onClick={() => handleCategoryClick("All")}*/ >
-              Packages filters
+            <div
+              className="category " /*onClick={() => handleCategoryClick("All")}*/
+            >
+              <span>Packages filters</span>
+              <i class="ri-arrow-down-s-line"></i>
             </div>
-            <div className="category " /*onClick={() => handleCategoryClick("All")}*/ >
-              select option for search
+            <div
+              className="category " /*onClick={() => handleCategoryClick("All")}*/
+            >
+              <span>select option for search</span>
+              <i class="ri-arrow-down-s-line"></i>
             </div>
-
           </div>
-
           <div className="filter__input">
             <input
               type="text"
@@ -127,7 +141,11 @@ function Home() {
         </div>
 
         <div className="filter__table">
-          <Table  getallemployes={getallemployes} openPopup={openPopup} refetch={refetch} />
+          <Table
+            getallemployes={getallemployes}
+            openPopup={openPopup}
+            refetch={refetch}
+          />
         </div>
       </div>
     </>
