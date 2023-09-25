@@ -100,45 +100,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="category__filter">
-          <div className="categories">
-            <div
-              className="category active__categary " /*onClick={() => handleCategoryClick("All")}*/
-            >
-              <i class="ri-close-line"></i>
-              <span>User</span>
-              <i class="ri-arrow-down-s-line"></i>
-            </div>
-            <div
-              className="category " /*onClick={() => handleCategoryClick("All")}*/
-            >
-              <span>Active User</span>
-              <i class="ri-arrow-down-s-line"></i>
-            </div>
-            <div
-              className="category " /*onClick={() => handleCategoryClick("All")}*/
-            >
-              <span>Packages filters</span>
-              <i class="ri-arrow-down-s-line"></i>
-            </div>
-            <div
-              className="category " /*onClick={() => handleCategoryClick("All")}*/
-            >
-              <span>select option for search</span>
-              <i class="ri-arrow-down-s-line"></i>
-            </div>
-          </div>
-          <div className="filter__input">
-            <input
-              type="text"
-              placeholder="search bar"
-              // value={searchQuery}
-              // onChange={handleSearch}
-              // onFocus={handleSearchBarFocus}
-              // onBlur={handleSearchBarBlur}
-            />
-          </div>
-        </div>
+
 
         <div className="filter__table">
           <Table

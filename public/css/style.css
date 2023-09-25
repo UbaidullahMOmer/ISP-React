@@ -309,7 +309,7 @@ body .main__dashboard .category__filter .category {
   padding: 8px 12px;
   border-radius: 8px;
   min-width: fit-content;
-  transition: var(--transition-3);
+  transition: 2s;
 }
 
 
