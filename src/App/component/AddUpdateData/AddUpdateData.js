@@ -3,7 +3,8 @@ import {
   useAddEmployeesMutation,
   useGetOneEmployeesQuery,
   useUpdateEmployeesMutation,
-  useGetAllEmployeesRoleQuery
+  useGetAllEmployeesRoleQuery,
+  useUpdateEmployeesRoleMutation
 } from "../../redux/services/DZapi";
 
 function AddUpdateData({ id, setShow, isViewMode, refetch }) {
@@ -11,13 +12,22 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
     updateEmployee,
     { isLoading: updateLoading, isError: updateError, error: updateErrorObj },
   ] = useUpdateEmployeesMutation();
+
+  const [
+    updateEmployeeRole,
+    { isLoading: updateRoleLoading},
+  ] = useUpdateEmployeesRoleMutation();
+
   const [
     addEmployee,
     { isLoading: addLoading, isError: addError, error: addErrorObj },
   ] = useAddEmployeesMutation();
-  const { data: getOneEmployeesData } = useGetOneEmployeesQuery(id);
-  // Fetch user data based on the provided id
 
+  const { data: getOneEmployeesData } = useGetOneEmployeesQuery(id);
+
+  const { data: rolesData } = useGetAllEmployeesRoleQuery();
+
+  console.log(rolesData);
   const [data, setData] = useState({
     name: "",
     number: "",
@@ -25,20 +35,30 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
     roll: "",
     status: true,
     package: "",
+    CustomerId: "",
+    password: "",
+    cnic: "",
+    comment: "",
   });
 
   useEffect(() => {
     if (id && getOneEmployeesData) {
       const userData = getOneEmployeesData.data.attributes;
-      console.log(getOneEmployeesData);
+      // console.log(getOneEmployeesData);
 
       setData({
-        name: userData?.name,
-        number: userData?.number,
-        address: userData?.address,
-        roll: userData?.roll,
-        status: userData?.status,
-        package: userData?.package,
+        name: userData?.name || "",
+        number: userData?.number || "",
+        address: userData?.address || "",
+        roll: userData?.roll || "",
+        status: userData?.status || true,
+        package: userData?.package || "",
+        createdAt: userData?.createdAt || "",
+        updatedAt: userData?.updatedAt || "",
+        CustomerId: userData?.CustomerId || "",
+        password: userData?.password || "",
+        cnic: userData?.cnic || "",
+        comment: userData?.comment || "",
       });
     }
   }, [id, getOneEmployeesData]);
@@ -53,28 +73,34 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
 
   const handleAddUser = async () => {
     try {
-      const response = await addEmployee({ data });
-      refetch()
-      // Handle successful user creation here (e.g., show a success message)
-      console.log("User added Data:", data);
-      console.log("User added successfully:", response);
+      // Set the createdAt and updatedAt properties before sending the data
+      const userDataWithTimestamps = {
+        ...data,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      const response = await addEmployee({ data: userDataWithTimestamps });
+      refetch();
       closePopup();
     } catch (err) {
-      // Handle error (e.g., show an error message)
-      console.error("Error adding user:", err);
+      // Handle error
     }
   };
 
   const handleUpdateUser = async () => {
     try {
-      const response = await updateEmployee({ id, data });
-      refetch()
-      // Handle successful user update here
-      console.log("User updated successfully:", response);
+      // Set the updatedAt property before sending the data
+      const userDataWithTimestamps = {
+        ...data,
+        updatedAt: new Date().toISOString(),
+      };
+
+      const response = await updateEmployee({ id, data: userDataWithTimestamps });
+      refetch();
       closePopup();
     } catch (err) {
-      // Handle error (e.g., show an error message)
-      console.error("Error updating user:", err);
+      // Handle error
     }
   };
 
@@ -85,6 +111,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
       handleAddUser();
     }
   };
+
   return (
     <div className="address__popup" id="address__popup">
       <h1 className="subheading">
@@ -104,7 +131,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               placeholder="Name"
               value={data?.name}
               onChange={handleChange}
-              disabled={isViewMode} // Disable the input field in view mode
+              disabled={isViewMode}
             />
           </div>
           <div className="input">
@@ -118,7 +145,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               placeholder="Number"
               value={data?.number}
               onChange={handleChange}
-              disabled={isViewMode} // Disable the input field in view mode
+              disabled={isViewMode}
             />
           </div>
           <div className="input">
@@ -132,29 +159,31 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               placeholder="Address"
               value={data?.address}
               onChange={handleChange}
-              disabled={isViewMode} // Disable the input field in view mode
+              disabled={isViewMode}
             />
           </div>
-
-
         </div>
 
         <div className="address__section">
-        <div className="input">
+          <div className="input">
             <label htmlFor="roll" required="">
               Roll<span>*</span>
             </label>
-            <input
-              type="text"
+            <select
               id="roll"
               name="roll"
-              placeholder="Roll"
               value={data?.roll}
               onChange={handleChange}
-              disabled={isViewMode} // Disable the input field in view mode
-            />
+              disabled={isViewMode}
+            >
+              {rolesData?.data?.map((role) => (
+                <option key={role?.id} value={role?.attributes.rollTitle}>
+                  {role?.attributes.rollTitle}
+                </option>
+              ))}
+            </select>
           </div>
-        <div className="input">
+          <div className="input">
             <label htmlFor="package" required="">
               Package<span>*</span>
             </label>
@@ -165,7 +194,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               placeholder="Package"
               value={data?.package}
               onChange={handleChange}
-              disabled={isViewMode} // Disable the input field in view mode
+              disabled={isViewMode}
             />
           </div>
           <div className="input">
@@ -177,11 +206,62 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               name="status"
               value={data?.status}
               onChange={handleChange}
-              disabled={isViewMode} // Disable the input field in view mode
+              disabled={isViewMode}
             >
               <option value={true}>Active</option>
               <option value={false}>Inactive</option>
             </select>
+          </div>
+        </div>
+        {/* Additional fields */}
+        <div className="address__section">
+          <div className="input">
+            <label htmlFor="CustomerId">Customer ID</label>
+            <input
+              type="text"
+              id="CustomerId"
+              name="CustomerId"
+              placeholder="Customer ID"
+              value={data?.CustomerId}
+              onChange={handleChange}
+              disabled={isViewMode}
+            />
+          </div>
+          <div className="input">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              value={data?.password}
+              onChange={handleChange}
+              disabled={isViewMode}
+            />
+          </div>
+          <div className="input">
+            <label htmlFor="cnic">CNIC</label>
+            <input
+              type="text"
+              id="cnic"
+              name="cnic"
+              placeholder="CNIC"
+              value={data?.cnic}
+              onChange={handleChange}
+              disabled={isViewMode}
+            />
+          </div>
+          <div className="input">
+            <label htmlFor="comment">Comment</label>
+            <input
+              type="text"
+              id="comment"
+              name="comment"
+              placeholder="Comment"
+              value={data?.comment}
+              onChange={handleChange}
+              disabled={isViewMode}
+            />
           </div>
         </div>
       </div>

@@ -44,7 +44,19 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
             <span className="data__heading client__name">Name</span>
           </div>
           <div className="data">
+            <span className="data__heading client__name">Customer Id</span>
+          </div>
+          <div className="data">
+            <span className="data__heading client__name">Password</span>
+          </div>
+          <div className="data">
             <span className="data__heading">Phone</span>
+          </div>
+          <div className="data">
+            <span className="data__heading">CNIC</span>
+          </div>
+          <div className="data">
+            <span className="data__heading">Package</span>
           </div>
           <div className="data address__data">
             <span className="data__heading">Address</span>
@@ -56,25 +68,40 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
             <span className="data__heading">Status</span>
           </div>
           <div className="data">
+            <span className="data__heading">Comment</span>
+          </div>
+          <div className="data">
             <span className="data__heading">Action</span>
           </div>
         </div>
 
-        {filteredUsers?.map((adata) => {
+        {filteredUsers?.map((adata, index) => {
           const data = adata?.attributes;
           return (
-            <div className="row" key={adata?.id}>
+            <div className="row" key={index}>
               <div className="data check">
                 <input type="checkbox" />
               </div>
               <div className="data check">
-                <span className="data__content user__id">{adata?.id}</span>
+                <span className="data__content user__id">{index+1}</span>
               </div>
               <div className="data ">
                 <span className="data__content client__name">{data?.name}</span>
               </div>
+              <div className="data ">
+                <span className="data__content client__name">{data?.CustomerId}</span>
+              </div>
+              <div className="data ">
+                <span className="data__content client__name">{data?.password}</span>
+              </div>
               <div className="data">
                 <span className="data__content">{data?.number}</span>
+              </div>
+              <div className="data">
+                <span className="data__content">{data?.cnic}</span>
+              </div>
+              <div className="data">
+                <span className="data__content">{data?.package}</span>
               </div>
               <div className="data address__data">
                 <span className="data__content" title={data?.address}>
@@ -84,6 +111,7 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
               <div className="data">
                 <span className="data__content paid">{data?.roll}</span>
               </div>
+              
               <div className="data">
                 <span
                   className="data__content paid"
@@ -93,6 +121,9 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
                 >
                   {data?.status ? "Active" : "Inactive"}
                 </span>
+              </div>
+              <div className="data">
+                <span className="data__content paid">{data?.comment}</span>
               </div>
               <div className="data">
                 <span className="data__content action">
@@ -117,5 +148,4 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
     </div>
   );
 }
-
 export default Table;

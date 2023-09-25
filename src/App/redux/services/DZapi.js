@@ -23,10 +23,17 @@ export const DZapi = createApi({
       }),
     }),
     updateEmployees: builder.mutation({
-      query: ({  data, id }) => ({
+      query: ({  id,data }) => ({
         url: `employees/${id}`,
         method: "PUT",
-        body: data,
+        body: {data: data}
+      }),
+    }),
+    updateEmployeesRole: builder.mutation({
+      query: ({  data, id }) => ({
+        url: `employee-roles/${id}`,
+        method: "PUT",
+        data: data,
       }),
     }),
     deleteEmployees: builder.mutation({
@@ -47,4 +54,5 @@ export const {
   useUpdateEmployeesMutation,
   useDeleteEmployeesMutation,
   useGetAllEmployeesRoleQuery,
+  useUpdateEmployeesRoleMutation,
 } = DZapi;
