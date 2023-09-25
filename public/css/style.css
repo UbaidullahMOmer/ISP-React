@@ -29,7 +29,7 @@
 #root {
   display: flex;
   align-items: start;
-  gap: 20px;
+  gap: 10px;
 }
 
 body .address__popup {
@@ -147,10 +147,12 @@ body .btn:hover {
   font-weight: 500;
 }
 
-body .address__fields.address__fields {
+body .address__fields {
+  height: 600px;
   width: 100%;
   gap: 10px;
   display: flex;
+  overflow-y: scroll;
 }
 
 body .address__popup .address__section {
@@ -684,7 +686,42 @@ body .main__dashboard .filter__table .table::-webkit-scrollbar-thumb {
   }
 }
 @media (max-width: 580px) {
- 
+  body .main__dashboard .filter__table .table .filter__row {
+    flex-direction: column;
+  }
+
+
+  body .main__dashboard .filter__table .table .filter__row .filter__input {
+    width: 100%;
+  }
+  
+  body .main__dashboard .filter__table .table .filter__row .btn {
+    padding: 20px;
+    width: 100%;
+  }
+
+  body .main__dashboard .category__filter {
+  flex-direction: column;
+  }
+
+  body .main__dashboard .category__filter .filter__input {
+    width: 100%;
+  }
+  
+  body .main__dashboard .categories {
+    width: 100%;
+  }
+
+
+  
+
+
+
+}
+@media (max-width: 1020px) {
+  body .address__fields.address__fields {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 790px) {
