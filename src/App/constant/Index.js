@@ -1,4 +1,3 @@
-// const serverUrl = '';
 // const serverUrl = "http://localhost:1337/api/";
 const serverUrl = "https://strapi-146033-0.cloudclusters.net/api/";
 
@@ -35,55 +34,3 @@ export const Config = {
     { shortName: "da", icon: "", longName: "Danish" },
   ],
 };
-
-
-
-
-
-
-
-
-{/* <div className="row heading__row">
-<div className="data check">
-  <input type="checkbox" />
-</div>
-<div className="data check">
-  <span className="data__heading">#ID</span>
-</div>
-<div className="data">
-  <span className="data__heading client__name">Name</span>
-</div>
-<div className="data">
-  <span className="data__heading client__name">Customer Id</span>
-</div>
-<div className="data">
-  <span className="data__heading client__name">Password</span>
-</div>
-<div className="data">
-  <span className="data__heading">Phone</span>
-</div>
-<div className="data">
-  <span className="data__heading">CNIC</span>
-</div>
-<div className="data">
-  <span className="data__heading">Package</span>
-</div>
-<div className="data">
-  <span className="data__heading">Comment</span>
-</div>
-<div className="data address__data">
-  <span className="data__heading">Address</span>
-</div>
-<div className="data">
-  <span className="data__heading">Role</span>
-</div>
-<div className="data">
-  <span className="data__heading">Status</span>
-</div>
-<div className="data">
-  <span className="data__heading">Action</span>
-</div>
-</div> */}
-
-
-

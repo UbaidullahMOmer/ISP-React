@@ -4,7 +4,7 @@ import {
   useGetOneEmployeesQuery,
   useUpdateEmployeesMutation,
   useGetAllEmployeesRoleQuery,
-  useUpdateEmployeesRoleMutation
+  // useUpdateEmployeesRoleMutation
 } from "../../redux/services/DZapi";
 
 function AddUpdateData({ id, setShow, isViewMode, refetch }) {
@@ -13,10 +13,10 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
     { isLoading: updateLoading, isError: updateError, error: updateErrorObj },
   ] = useUpdateEmployeesMutation();
 
-  const [
-    updateEmployeeRole,
-    { isLoading: updateRoleLoading},
-  ] = useUpdateEmployeesRoleMutation();
+  // const [
+  //   updateEmployeeRole,
+  //   { isLoading: updateRoleLoading},
+  // ] = useUpdateEmployeesRoleMutation();
 
   const [
     addEmployee,
@@ -81,6 +81,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
       };
 
       const response = await addEmployee({ data: userDataWithTimestamps });
+      console.log(response)
       refetch();
       closePopup();
     } catch (err) {
@@ -97,6 +98,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
       };
 
       const response = await updateEmployee({ id, data: userDataWithTimestamps });
+      console.log(response)
       refetch();
       closePopup();
     } catch (err) {
@@ -223,7 +225,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               name="CustomerId"
               placeholder="Customer ID"
               value={data?.CustomerId}
-              onChange={handleChange}
+              onChange={handleChange} 
               disabled={isViewMode}
             />
           </div>
