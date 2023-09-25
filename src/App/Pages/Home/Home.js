@@ -92,6 +92,40 @@ function Home() {
             </div>
           </div>
         </div>
+
+        <div className="category__filter">
+
+          <div className="categories">
+
+            <div className="category active__categary " /*onClick={() => handleCategoryClick("All")}*/ >
+              User
+            </div>
+
+            <div className="category " /*onClick={() => handleCategoryClick("All")}*/ >
+              Active User
+            </div>
+
+            <div className="category " /*onClick={() => handleCategoryClick("All")}*/ >
+              Packages filters
+            </div>
+            <div className="category " /*onClick={() => handleCategoryClick("All")}*/ >
+              select option for search
+            </div>
+
+          </div>
+
+          <div className="filter__input">
+            <input
+              type="text"
+              placeholder="search bar"
+              // value={searchQuery}
+              // onChange={handleSearch}
+              // onFocus={handleSearchBarFocus}
+              // onBlur={handleSearchBarBlur}
+            />
+          </div>
+        </div>
+
         <div className="filter__table">
           <Table  getallemployes={getallemployes} openPopup={openPopup} refetch={refetch} />
         </div>
