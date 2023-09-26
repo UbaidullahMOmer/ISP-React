@@ -199,7 +199,7 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
             ) : null}
             <div>
               <span onClick={toggleStatusDrop}>
-                {selectedStatusFilter == "All" ? "Status" : selectedStatusFilter? "Active":  "Inactive"}
+                {selectedStatusFilter === "All" ? "Status" : selectedStatusFilter? "Active":  "Inactive"}
               </span>
               <i className="ri-arrow-down-s-line"></i>
             </div>
