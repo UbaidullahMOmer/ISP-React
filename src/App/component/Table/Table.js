@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDeleteEmployeesMutation } from "../../redux/services/DZapi";
 
 function Table({ getallemployes, openPopup, setShow, refetch }) {
+  const [showUserDrop, setShowUserDrop] = useState(false);
+
   const [nameFilter, setNameFilter] = useState("");
   const [deleteEmployees] = useDeleteEmployeesMutation();
 
@@ -15,16 +17,40 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
     const data = adata?.attributes;
     return data?.name.toLowerCase().includes(nameFilter.toLowerCase());
   });
+
+
+  const toggleUserDrop = () => {
+    setShowUserDrop(!showUserDrop);
+  };
+
   return (
     <>
       <div className="category__filter">
-        <div className="categories">
+        <div className="categories user__icon">
           <div
             className="category active__categary " /*onClick={() => handleCategoryClick("All")}*/
           >
             <i class="ri-close-line"></i>
-            <span>User</span>
+            <span onClick={toggleUserDrop}>User</span>
             <i class="ri-arrow-down-s-line"></i>
+            {
+            showUserDrop &&
+            <div className="user__drop">
+                  <span to="/user" className="span">
+                    <i class="fa-solid fa-user"></i>
+                    Admin
+                  </span>
+                  <span to="/setting" className="span">
+                    <i class="fa-solid fa-gear"></i>
+                    User
+                  </span>
+                  <span to="/" className="span" >
+                    <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                    Recovery Boy
+                  </span>
+            </div>
+            }
+
           </div>
           <div
             className="category " /*onClick={() => handleCategoryClick("All")}*/
