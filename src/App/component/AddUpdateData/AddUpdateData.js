@@ -4,19 +4,18 @@ import {
   useGetOneEmployeesQuery,
   useUpdateEmployeesMutation,
   useGetAllEmployeesRoleQuery,
-  // useUpdateEmployeesRoleMutation
+  useGetAllPackagesQuery,
 } from "../../redux/services/DZapi";
 
 function AddUpdateData({ id, setShow, isViewMode, refetch }) {
+  const { data: allPackages } = useGetAllPackagesQuery();
+  const packageNames =
+    allPackages?.data.map((pkg) => pkg?.attributes.name) || [];
+
   const [
     updateEmployee,
     { isLoading: updateLoading, isError: updateError, error: updateErrorObj },
   ] = useUpdateEmployeesMutation();
-
-  // const [
-  //   updateEmployeeRole,
-  //   { isLoading: updateRoleLoading},
-  // ] = useUpdateEmployeesRoleMutation();
 
   const [
     addEmployee,
@@ -24,11 +23,9 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
   ] = useAddEmployeesMutation();
 
   const { data: getOneEmployeesData } = useGetOneEmployeesQuery(id);
-
   const { data: rolesData } = useGetAllEmployeesRoleQuery();
 
-  console.log(rolesData);
-  const [data, setData] = useState({
+  const initialData = {
     name: "",
     number: "",
     address: "",
@@ -39,26 +36,16 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
     password: "",
     cnic: "",
     comment: "",
-  });
+  };
+
+  const [data, setData] = useState(initialData);
 
   useEffect(() => {
     if (id && getOneEmployeesData) {
       const userData = getOneEmployeesData.data.attributes;
-      // console.log(getOneEmployeesData);
-
       setData({
-        name: userData?.name || "",
-        number: userData?.number || "",
-        address: userData?.address || "",
-        roll: userData?.roll || "",
-        status: userData?.status || true,
-        package: userData?.package || "",
-        createdAt: userData?.createdAt || "",
-        updatedAt: userData?.updatedAt || "",
-        CustomerId: userData?.CustomerId || "",
-        password: userData?.password || "",
-        cnic: userData?.cnic || "",
-        comment: userData?.comment || "",
+        ...initialData,
+        ...userData,
       });
     }
   }, [id, getOneEmployeesData]);
@@ -73,7 +60,6 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
 
   const handleAddUser = async () => {
     try {
-      // Set the createdAt and updatedAt properties before sending the data
       const userDataWithTimestamps = {
         ...data,
         createdAt: new Date().toISOString(),
@@ -81,7 +67,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
       };
 
       const response = await addEmployee({ data: userDataWithTimestamps });
-      console.log(response)
+      console.log(response);
       refetch();
       closePopup();
     } catch (err) {
@@ -91,14 +77,16 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
 
   const handleUpdateUser = async () => {
     try {
-      // Set the updatedAt property before sending the data
       const userDataWithTimestamps = {
         ...data,
         updatedAt: new Date().toISOString(),
       };
 
-      const response = await updateEmployee({ id, data: userDataWithTimestamps });
-      console.log(response)
+      const response = await updateEmployee({
+        id,
+        data: userDataWithTimestamps,
+      });
+      console.log(response);
       refetch();
       closePopup();
     } catch (err) {
@@ -131,7 +119,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               id="name"
               name="name"
               placeholder="Name"
-              value={data?.name}
+              value={data.name}
               onChange={handleChange}
               disabled={isViewMode}
             />
@@ -145,7 +133,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               id="number"
               name="number"
               placeholder="Number"
-              value={data?.number}
+              value={data.number}
               onChange={handleChange}
               disabled={isViewMode}
             />
@@ -159,7 +147,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               id="address"
               name="address"
               placeholder="Address"
-              value={data?.address}
+              value={data.address}
               onChange={handleChange}
               disabled={isViewMode}
             />
@@ -174,13 +162,13 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
             <select
               id="roll"
               name="roll"
-              value={data?.roll}
+              value={data.roll}
               onChange={handleChange}
               disabled={isViewMode}
             >
               {rolesData?.data?.map((role) => (
-                <option key={role?.id} value={role?.attributes.rollTitle}>
-                  {role?.attributes.rollTitle}
+                <option key={role.id} value={role.attributes.rollTitle}>
+                  {role.attributes.rollTitle}
                 </option>
               ))}
             </select>
@@ -189,15 +177,19 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
             <label htmlFor="package" required="">
               Package<span>*</span>
             </label>
-            <input
-              type="text"
+            <select
               id="package"
               name="package"
-              placeholder="Package"
-              value={data?.package}
+              value={data.package}
               onChange={handleChange}
               disabled={isViewMode}
-            />
+            >
+              {packageNames.map((packageName) => (
+                <option key={packageName} value={packageName}>
+                  {packageName}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="input">
             <label htmlFor="status" required="">
@@ -206,12 +198,12 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
             <select
               id="status"
               name="status"
-              value={data?.status}
+              value={data.status ? "Active" : "Inactive"} // Set the initial value based on data.status
               onChange={handleChange}
               disabled={isViewMode}
             >
-              <option value={true}>Active</option>
-              <option value={false}>Inactive</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
             </select>
           </div>
         </div>
@@ -224,8 +216,8 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               id="CustomerId"
               name="CustomerId"
               placeholder="Customer ID"
-              value={data?.CustomerId}
-              onChange={handleChange} 
+              value={data.CustomerId}
+              onChange={handleChange}
               disabled={isViewMode}
             />
           </div>
@@ -236,7 +228,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               id="password"
               name="password"
               placeholder="Password"
-              value={data?.password}
+              value={data.password}
               onChange={handleChange}
               disabled={isViewMode}
             />
@@ -248,7 +240,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               id="cnic"
               name="cnic"
               placeholder="CNIC"
-              value={data?.cnic}
+              value={data.cnic}
               onChange={handleChange}
               disabled={isViewMode}
             />
@@ -260,7 +252,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
               id="comment"
               name="comment"
               placeholder="Comment"
-              value={data?.comment}
+              value={data.comment}
               onChange={handleChange}
               disabled={isViewMode}
             />

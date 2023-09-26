@@ -1,10 +1,26 @@
-import React, { useState } from "react";
-import { useDeleteEmployeesMutation } from "../../redux/services/DZapi";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  useDeleteEmployeesMutation,
+  useGetAllPackagesQuery,
+  useGetAllEmployeesRoleQuery,
+} from "../../redux/services/DZapi";
 
 function Table({ getallemployes, openPopup, setShow, refetch }) {
-  const [showUserDrop, setShowUserDrop] = useState(false);
-
+  const { data: allPackages } = useGetAllPackagesQuery();
+  const { data: rolesData } = useGetAllEmployeesRoleQuery();
+  const [showRoleDrop, setShowRoleDrop] = useState(false);
+  const [showPackageDrop, setShowPackageDrop] = useState(false);
+  const [showAttributeDrop, setShowAttributeDrop] = useState(false);
+  const [showStatusDrop, setShowStatusDrop] = useState(false);
+  const roleDropRef = useRef(null);
+  const packageDropRef = useRef(null);
+  const attributeDropRef = useRef(null);
+  const statusDropRef = useRef(null);
   const [nameFilter, setNameFilter] = useState("");
+  const [selectedRoleFilter, setSelectedRoleFilter] = useState("All");
+  const [selectedPackageFilter, setSelectedPackageFilter] = useState("All");
+  const [selectedAttributeFilter, setSelectedAttributeFilter] = useState("name");
+  const [selectedStatusFilter, setSelectedStatusFilter] = useState("All");
   const [deleteEmployees] = useDeleteEmployeesMutation();
 
   const handleDeleteEmployee = async (employeeId) => {
@@ -13,68 +29,228 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
       refetch();
     } catch (error) {}
   };
+
   const filteredUsers = getallemployes?.filter((adata) => {
     const data = adata?.attributes;
-    return data?.name.toLowerCase().includes(nameFilter.toLowerCase());
+    const selectedAttribute = selectedAttributeFilter === "name" ? "name" : data?.[selectedAttributeFilter];
+    
+    return (
+      (selectedAttribute.toLowerCase().includes(nameFilter.toLowerCase()) &&
+        (selectedRoleFilter === "All" || data?.roll === selectedRoleFilter) &&
+        (selectedPackageFilter === "All" || data?.package === selectedPackageFilter) &&
+        (selectedStatusFilter === "All" || data?.status === selectedStatusFilter)
+    )
+    )
   });
+  
+  
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (roleDropRef.current && !roleDropRef.current.contains(event.target)) {
+        setShowRoleDrop(false);
+      }
+      if (packageDropRef.current && !packageDropRef.current.contains(event.target)) {
+        setShowPackageDrop(false);
+      }
+      if (attributeDropRef.current && !attributeDropRef.current.contains(event.target)) {
+        setShowAttributeDrop(false);
+      }
+      if (statusDropRef.current && !statusDropRef.current.contains(event.target)) {
+        setShowStatusDrop(false);
+      }
+    };
 
-  const toggleUserDrop = () => {
-    setShowUserDrop(!showUserDrop);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleRoleDrop = () => {
+    setShowRoleDrop(!showRoleDrop);
+  };
+
+  const togglePackageDrop = () => {
+    setShowPackageDrop(!showPackageDrop);
+  };
+
+  const toggleAttributeDrop = () => {
+    setShowAttributeDrop(!showAttributeDrop);
+  };
+
+  const toggleStatusDrop = () => {
+    setShowStatusDrop(!showStatusDrop);
+  };
+
+  const handleRoleSelect = (role) => {
+    setSelectedRoleFilter(role);
+    setShowRoleDrop(false);
+  };
+
+  const handlePackageSelect = (pkg) => {
+    setSelectedPackageFilter(pkg);
+    setShowPackageDrop(false);
+  };
+
+  const handleAttributeSelect = (attribute) => {
+    setSelectedAttributeFilter(attribute);
+    setShowAttributeDrop(false);
+  };
+
+  const handleStatusSelect = (status) => {
+    setSelectedStatusFilter(status);
+    setShowStatusDrop(false);
   };
 
   return (
     <>
       <div className="category__filter">
-        <div className="categories user__icon">
+        <div className="categories">
           <div
-            className="category active__categary " /*onClick={() => handleCategoryClick("All")}*/
+            className={`user__icon category ${
+              selectedRoleFilter !== "All" ? "active__categary" : ""
+            }`}
           >
-            <i class="ri-close-line"></i>
-            <span onClick={toggleUserDrop}>User</span>
-            <i class="ri-arrow-down-s-line"></i>
-            {
-            showUserDrop &&
-            <div className="user__drop">
-                  <span to="/user" className="span">
-                    <i class="fa-solid fa-user"></i>
-                    Admin
-                  </span>
-                  <span to="/setting" className="span">
-                    <i class="fa-solid fa-gear"></i>
-                    User
-                  </span>
-                  <span to="/" className="span" >
-                    <i className="fa-solid fa-arrow-right-to-bracket"></i>
-                    Recovery Boy
-                  </span>
+            {selectedRoleFilter !== "All" ? (
+              <i
+                className="ri-close-line"
+                onClick={() => handleRoleSelect("All")}
+              ></i>
+            ) : null}
+            <div>
+              <span onClick={toggleRoleDrop}>
+                {selectedRoleFilter !== "All" ? selectedRoleFilter : "Role"}
+              </span>
+              <i className="ri-arrow-down-s-line"></i>
             </div>
-            }
-
+            {showRoleDrop && (
+              <div className="user__drop" ref={roleDropRef}>
+                {rolesData?.data?.map((role) => (
+                  <span
+                    key={role.id}
+                    className="span"
+                    onClick={() => handleRoleSelect(role.attributes.rollTitle)}
+                  >
+                    {role.attributes.rollTitle}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className={`user__icon category ${selectedPackageFilter !== "All" ? "active__categary" : ""}`}>
+            {selectedPackageFilter !== "All" ? (
+              <i
+                className="ri-close-line"
+                onClick={() => setSelectedPackageFilter("All")}
+              ></i>
+            ) : null}
+            <span onClick={togglePackageDrop}>
+              Package {selectedPackageFilter !== "All" && `(${selectedPackageFilter})`}
+            </span>
+            <i className="ri-arrow-down-s-line"></i>
+            {showPackageDrop && (
+              <div className="user__drop" ref={packageDropRef}>
+                {allPackages?.data?.map((pkg) => (
+                  <span
+                    key={pkg.id}
+                    className="span"
+                    onClick={() => handlePackageSelect(pkg.attributes.name)}
+                  >
+                    {pkg.attributes.name}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
           <div
-            className="category " /*onClick={() => handleCategoryClick("All")}*/
+            className={`user__icon category ${selectedStatusFilter !== "All" ? "active__categary" : ""}`}
           >
-            <span>Active User</span>
-            <i class="ri-arrow-down-s-line"></i>
+            {selectedStatusFilter !== "All" ? (
+              <i
+                className="ri-close-line"
+                onClick={() => handleStatusSelect("All")}
+              ></i>
+            ) : null}
+            <div>
+              <span onClick={toggleStatusDrop}>
+                {selectedStatusFilter !== "All" ? selectedStatusFilter : "Status"}
+              </span>
+              <i className="ri-arrow-down-s-line"></i>
+            </div>
+            {showStatusDrop && (
+              <div className="user__drop" ref={statusDropRef}>
+                <span
+                  className="span"
+                  onClick={() => handleStatusSelect("Active")}
+                >
+                  Active
+                </span>
+                <span
+                  className="span"
+                  onClick={() => handleStatusSelect("Inactive")}
+                >
+                  Inactive
+                </span>
+              </div>
+            )}
           </div>
           <div
-            className="category " /*onClick={() => handleCategoryClick("All")}*/
+            className={`user__icon category ${selectedAttributeFilter !== "name" ? "active__categary" : ""}`}
           >
-            <span>Packages filters</span>
-            <i class="ri-arrow-down-s-line"></i>
-          </div>
-          <div
-            className="category " /*onClick={() => handleCategoryClick("All")}*/
-          >
-            <span>select option for search</span>
-            <i class="ri-arrow-down-s-line"></i>
+            {selectedAttributeFilter !== "name" ? (
+              <i
+                className="ri-close-line"
+                onClick={() => handleAttributeSelect("name")}
+              ></i>
+            ) : null}
+            <div>
+              <span onClick={toggleAttributeDrop}>
+                {selectedAttributeFilter !== "name" ? selectedAttributeFilter : "Attribute"}
+              </span>
+              <i className="ri-arrow-down-s-line"></i>
+            </div>
+            {showAttributeDrop && (
+              <div className="user__drop" ref={attributeDropRef}>
+                <span
+                  className="span"
+                  onClick={() => handleAttributeSelect("name")}
+                >
+                  name
+                </span>
+                <span
+                  className="span"
+                  onClick={() => handleAttributeSelect("address")}
+                >
+                  address
+                </span>
+                <span
+                  className="span"
+                  onClick={() => handleAttributeSelect("phone")}
+                >
+                  phone
+                </span>
+                <span
+                  className="span"
+                  onClick={() => handleAttributeSelect("CustomerId")}
+                >
+                  Customer ID
+                </span>
+                <span
+                  className="span"
+                  onClick={() => handleAttributeSelect("cnic")}
+                >
+                  Cnic
+                </span>
+              </div>
+            )}
           </div>
         </div>
         <div className="filter__input">
           <input
             type="text"
-            placeholder="Filter by Name"
+            placeholder={`Filter by ${selectedAttributeFilter}`}
             value={nameFilter}
             onChange={(e) => setNameFilter(e.target.value)}
           />

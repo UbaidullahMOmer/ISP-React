@@ -15,6 +15,8 @@ export const DZapi = createApi({
   endpoints: (builder) => ({
     getAllEmployees: builder.query({query: () => "employees",}),
     getOneEmployees: builder.query({query: (id) => `employees/${id}`,}), 
+    getAllPackages: builder.query({query: () => "packages",}),
+    getOnePackages: builder.query({query: (id) => `packages/${id}`,}), 
     addEmployees: builder.mutation({
       query: (data) => ({
         url: `employees`,
@@ -55,4 +57,6 @@ export const {
   useDeleteEmployeesMutation,
   useGetAllEmployeesRoleQuery,
   useUpdateEmployeesRoleMutation,
+  useGetOnePackagesQuery,
+  useGetAllPackagesQuery,
 } = DZapi;
