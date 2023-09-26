@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
   useAddEmployeesMutation,
   useGetOneEmployeesQuery,
@@ -25,7 +25,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
   const { data: getOneEmployeesData } = useGetOneEmployeesQuery(id);
   const { data: rolesData } = useGetAllEmployeesRoleQuery();
 
-  const initialData = {
+  const initialData = useMemo(() => ({
     name: "",
     number: "",
     address: "",
@@ -36,7 +36,7 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
     password: "",
     cnic: "",
     comment: "",
-  };
+  }), []);
 
   const [data, setData] = useState(initialData);
 
@@ -48,7 +48,9 @@ function AddUpdateData({ id, setShow, isViewMode, refetch }) {
         ...userData,
       });
     }
-  }, [id, getOneEmployeesData]);
+  }, [id, getOneEmployeesData, initialData]);
+  
+
 
   const closePopup = () => {
     setShow(false);
