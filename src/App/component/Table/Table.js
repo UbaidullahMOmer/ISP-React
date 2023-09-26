@@ -30,20 +30,41 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
     } catch (error) {}
   };
 
+
+
+  
   const filteredUsers = getallemployes?.filter((adata) => {
     const data = adata?.attributes;
-    const selectedAttribute = selectedAttributeFilter === "name" ? "name" : data?.[selectedAttributeFilter];
-    
+
+  const attributeToFilter = selectedAttributeFilter === "name"
+  ? data?.name
+  : selectedAttributeFilter === "address"
+  ? data?.address
+  : selectedAttributeFilter === "phone"
+  ? data?.phone
+  : selectedAttributeFilter === "CustomerId"
+  ? data?.CustomerId
+  : selectedAttributeFilter === "cnic"
+  ? data?.cnic
+  : null;
+
     return (
-      (selectedAttribute.toLowerCase().includes(nameFilter.toLowerCase()) &&
+      ( (attributeToFilter &&
+    attributeToFilter.toLowerCase().includes(nameFilter.toLowerCase())) &&
         (selectedRoleFilter === "All" || data?.roll === selectedRoleFilter) &&
         (selectedPackageFilter === "All" || data?.package === selectedPackageFilter) &&
-        (selectedStatusFilter === "All" || data?.status === selectedStatusFilter)
-    )
-    )
+        ((selectedAttributeFilter === "All" && nameFilter === "") || (
+          selectedAttributeFilter !== "All" && 
+          (selectedAttributeFilter === "phone" ? 
+            data?.[selectedAttributeFilter]?.includes(nameFilter) : 
+            data?.[selectedAttributeFilter]?.toLowerCase().includes(nameFilter.toLowerCase())
+          )
+        )) &&
+        (selectedStatusFilter === "All" || data?.status === selectedStatusFilter))
+    );
   });
   
-  
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
