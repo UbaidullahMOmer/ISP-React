@@ -265,14 +265,17 @@ body .main__dashboard .category__filter {
   align-items: center;
   gap: 30px;
   justify-content: space-between;
+  width: 100%;
 }
 
 body .main__dashboard .categories {
   padding: 8px 0;
   display: flex;
   align-items: center;
-  width: fit-content;
+  width: 100%;
   gap: 20px;
+  flex-wrap: wrap;
+
 }
 .user__icon {
   position: relative;
@@ -487,15 +490,20 @@ body .main__dashboard .dashboard__cards .card .user__icon {
   color: var(--white-color);
   font-size: 40px;
 }
+body .main__dashboard .dashboard__cards .card .cdata {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-body .main__dashboard .dashboard__cards .card .heading {
+body .main__dashboard .dashboard__cards .card .cdata .heading {
   color: rgba(58, 53, 65, 0.87);
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
 }
 
-body .main__dashboard .dashboard__cards .card .number {
+body .main__dashboard .dashboard__cards .card .cdata .number {
   color: rgba(58, 53, 65, 0.87);
   font-size: 18px;
   font-weight: 500;
@@ -734,6 +742,10 @@ body .main__dashboard .filter__table .table::-webkit-scrollbar-thumb {
 @media (max-width: 464px) {
   body .main__dashboard .dashboard__cards .card {
     width: 400px;
+    flex-direction: row;
+  }
+  body .main__dashboard .dashboard__cards .card .cdata{
+ display: flex;
   }
 }
 @media (max-width: 580px) {

@@ -17,10 +17,10 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
   const attributeDropRef = useRef(null);
   const statusDropRef = useRef(null);
   const [nameFilter, setNameFilter] = useState("");
-  const [selectedRoleFilter, setSelectedRoleFilter] = useState("All");
+  const [selectedRoleFilter, setSelectedRoleFilter] = useState("User");
   const [selectedPackageFilter, setSelectedPackageFilter] = useState("All");
   const [selectedAttributeFilter, setSelectedAttributeFilter] = useState("name");
-  const [selectedStatusFilter, setSelectedStatusFilter] = useState("All");
+  const [selectedStatusFilter, setSelectedStatusFilter] = useState(true);
   const [deleteEmployees] = useDeleteEmployeesMutation();
 
   const handleDeleteEmployee = async (employeeId) => {
@@ -199,7 +199,7 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
             ) : null}
             <div>
               <span onClick={toggleStatusDrop}>
-                {selectedStatusFilter !== "All" ? selectedStatusFilter : "Status"}
+                {selectedStatusFilter == "All" ? "Status" : selectedStatusFilter? "Active":  "Inactive"}
               </span>
               <i className="ri-arrow-down-s-line"></i>
             </div>
@@ -207,13 +207,13 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
               <div className="user__drop" ref={statusDropRef}>
                 <span
                   className="span"
-                  onClick={() => handleStatusSelect("Active")}
+                  onClick={() => handleStatusSelect(true)}
                 >
                   Active
                 </span>
                 <span
                   className="span"
-                  onClick={() => handleStatusSelect("Inactive")}
+                  onClick={() => handleStatusSelect(false)}
                 >
                   Inactive
                 </span>

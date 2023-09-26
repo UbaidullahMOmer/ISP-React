@@ -76,26 +76,34 @@ function Home() {
           <h1 className="heading">Dashboard</h1>
           <div className="cards">
             <div className="card">
-              <i className="user__icon ri-user-4-line" />
+              <i class="user__icon ri-user-line"></i>
+              <div className="cdata">  
               <span className="heading">Total Clients</span>
               <span className="number">{getallemployes?.length}</span>
+              </div>
             </div>
             <div className="card">
-              <i className="user__icon ri-add-circle-line" />
+              <i className="user__icon ri-user-follow-line" />
+              <div className="cdata">
               <span className="heading">Active Clients</span>
               <span className="number">{filteredActiveEmployees?.length}</span>
+              </div>
             </div>
             <div className="card">
-              <i className="user__icon ri-close-line" />
+              <i className="user__icon ri-user-unfollow-line" />
+              <div className="cdata">
               <span className="heading">Un Active Clients</span>
               <span className="number">
                 {filteredUnActiveEmployees?.length}
               </span>
+              </div>
             </div>
             <div className="card">
-              <i className="user__icon ri-add-line" />
+              <i className="user__icon ri-user-star-line" />
+              <div className="cdata">
               <span className="heading">New Clients</span>
               <span className="number">{filteredNewClients?.length}</span>
+              </div>
             </div>
           </div>
         </div>
