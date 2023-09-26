@@ -228,7 +228,7 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
             ) : null}
             <div>
               <span onClick={toggleAttributeDrop}>
-                {selectedAttributeFilter !== "name" ? selectedAttributeFilter : "Attribute"}
+                {selectedAttributeFilter !== "name" ? selectedAttributeFilter : "Select Option For search"}
               </span>
               <i className="ri-arrow-down-s-line"></i>
             </div>
