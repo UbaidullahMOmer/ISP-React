@@ -35,34 +35,37 @@ function Table({ getallemployes, openPopup, setShow, refetch }) {
   
   const filteredUsers = getallemployes?.filter((adata) => {
     const data = adata?.attributes;
-
-  const attributeToFilter = selectedAttributeFilter === "name"
-  ? data?.name
-  : selectedAttributeFilter === "address"
-  ? data?.address
-  : selectedAttributeFilter === "phone"
-  ? data?.phone
-  : selectedAttributeFilter === "CustomerId"
-  ? data?.CustomerId
-  : selectedAttributeFilter === "cnic"
-  ? data?.cnic
-  : null;
-
+  
+    const attributeToFilter =
+      selectedAttributeFilter === "name"
+        ? data?.name
+        : selectedAttributeFilter === "address"
+        ? data?.address
+        : selectedAttributeFilter === "phone"
+        ? data?.number // Change this to "number" for the "phone" attribute
+        : selectedAttributeFilter === "CustomerId"
+        ? data?.CustomerId
+        : selectedAttributeFilter === "cnic"
+        ? data?.cnic
+        : null;
+  
     return (
-      ( (attributeToFilter &&
-    attributeToFilter.toLowerCase().includes(nameFilter.toLowerCase())) &&
-        (selectedRoleFilter === "All" || data?.roll === selectedRoleFilter) &&
-        (selectedPackageFilter === "All" || data?.package === selectedPackageFilter) &&
-        ((selectedAttributeFilter === "All" && nameFilter === "") || (
-          selectedAttributeFilter !== "All" && 
-          (selectedAttributeFilter === "phone" ? 
-            data?.[selectedAttributeFilter]?.includes(nameFilter) : 
-            data?.[selectedAttributeFilter]?.toLowerCase().includes(nameFilter.toLowerCase())
-          )
-        )) &&
-        (selectedStatusFilter === "All" || data?.status === selectedStatusFilter))
+      (attributeToFilter &&
+        attributeToFilter.toLowerCase().includes(nameFilter.toLowerCase())) &&
+      (selectedRoleFilter === "All" || data?.roll === selectedRoleFilter) &&
+      (selectedPackageFilter === "All" ||
+        data?.package === selectedPackageFilter) &&
+      ((selectedAttributeFilter === "All" && nameFilter === "") || (
+        selectedAttributeFilter !== "All" &&
+        (selectedAttributeFilter === "phone"
+          ? data?.number // Change this to "number" for the "phone" attribute
+          : data?.[selectedAttributeFilter]?.toLowerCase().includes(nameFilter.toLowerCase())
+        )
+      )) &&
+      (selectedStatusFilter === "All" || data?.status === selectedStatusFilter)
     );
   });
+  
   
 
 
